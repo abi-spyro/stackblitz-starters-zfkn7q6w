@@ -20,7 +20,7 @@ app.get('/api/tripadvisor/*', async (req, res) => {
         },
         headers: {
           accept: "application/json",
-          Referer: req.hostname,
+          Referer: `https://${req.hostname}`,
         },
         timeout: 10000 // 10s
       }
