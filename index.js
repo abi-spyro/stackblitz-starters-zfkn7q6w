@@ -1,5 +1,5 @@
-import express from 'express';
-import axios from 'axios';
+const express = require('express');
+const axios = require('axios');
 const app = express();
 const port = 3000;
 
@@ -9,7 +9,7 @@ app.get('/', (req, res) => {
 
 app.get('/api/tripadvisor/*', async (req, res) => {
   try {
-    const endpoint = req.originalUrl.replace('/api/tripadvisor/', '');
+    const endpoint = req.path.replace('/api/tripadvisor/', '');
 
     const response = await axios.get(
       `https://api.content.tripadvisor.com/api/v1/${endpoint}`,
@@ -19,8 +19,10 @@ app.get('/api/tripadvisor/*', async (req, res) => {
           key: process.env.TRIPADVISOR_API_KEY,
         },
         headers: {
-          Referer: 'https://8twwtc-3000.csb.app',
+          accept: "application/json",
+          Referer: req.host,
         },
+        timeout: 10000 // 10s
       }
     );
 
